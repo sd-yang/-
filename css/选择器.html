@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* ----------------------------------基本选择器------------------------------- */
+
+    /* 通配选择器 */
+    /* 不推荐使用通配选择器,因为它是性能最低的一个CSS选择器 */
+    * {
+        font-size: 10px;
+    }
+
+    *.warning {
+        color: red;
+    }
+
+    /* id选择器 */
+    #selectedId {
+        font-size: 20px;
+    }
+
+    /* 类型选择器 */
+    .selectedClass {
+        color: cornflowerblue;
+    }
+
+    /* 属性选择器 */
+    div[attr="attr"] {
+        color: coral;
+    }
+
+    /* 元素选择器 */
+    font {
+        color: cornflowerblue;
+    }
+
+    /* ----------------------------------分组选择器------------------------------- */
+    span,
+    font {
+        font-family: serif;
+    }
+
+    /* ------------------------------------组合器--------------------------------- */
+
+    /* 后代组合器
+        组合器选择前一个元素的后代节点
+        语法：A B
+        例子：div span 匹配所有位于任意 <div> 元素之内的 <span> 元素。 
+    */
+    div span {
+        color: blue
+    }
+
+    ;
+
+    /* 直接子代组合器
+        > 组合器选择前一个元素的直接子代的节点。
+        语法：A > B
+        例子：ul > li 匹配直接嵌套在 <ul> 元素内的所有 <li> 元素。
+    */
+    ui>li {
+        color: red
+    }
+
+    ;
+
+    /* 一般兄弟组合器
+        ~ 组合器选择兄弟元素，也就是说，后一个节点在前一个节点后面的任意位置，并且共享同一个父节点。
+        语法：A ~ B
+        例子：p ~ span 匹配同一父元素下，<p> 元素后的所有 <span> 元素。
+    */
+    p~span {
+        color: red
+    }
+
+    ;
+
+    /* 紧邻兄弟组合器
+        + 组合器选择相邻元素，即后一个元素紧跟在前一个之后，并且共享同一个父节点。
+        语法：A + B
+        例子：h2 + p 会匹配所有紧邻在 <h2> 元素后的 <p> 元素。
+    */
+    h2+p {
+        color: green;
+    }
+
+    /* ------------------------------------伪选择器------------------------------- */
+
+    /* 伪类
+        : 伪选择器支持按照未被包含在文档树中的状态信息来选择元素。
+        例子：a:visited 匹配所有曾被访问过的 <a> 元素。
+    */
+    a:visited {
+        color: green;
+    }
+
+    /* 伪元素
+        :: 伪选择器用于表示无法用 HTML 语义表达的实体。
+        例子：p::first-line 匹配所有 <p> 元素的第一行。
+    */
+    p::first-line {
+        color: green;
+    }
+</style>
+
+<body>
+    <p>
+        <span class="warning">通配选择器</span>
+        通配选择器
+    </p>
+    <div id="selectedId">id选择器</div>
+    <div class="selectedClass">类型选择器</div>
+    <div attr="attr">属性选择器</div>
+    <font>元素选择器</font>
+
+</body>
+
+</html>
