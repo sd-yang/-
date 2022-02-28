@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const fn = () => {
+            return new Promise((res, rej) => {
+                const results = Math.random();
+                setTimeout(() => {
+                    if (results > 0.7) {
+                        rej(results);
+                    } else {
+                        res(results);
+                    }
+                }, 1000)
+
+            })
+        }
+
+        const retry = (fn, times) => {
+            return new Promise(async (resolve, reject) => {
+                while (times--) {
+                    try {
+                        let res = await fn();
+                        console.log('执行成功');
+                        resolve(res);
+                        break;
+                    } catch (err) {
+                        console.log('执行失败一次，重试');
+                        if (!times) {
+                            reject(err);
+                        }
+                    }
+                }
+            }).catch(() => {
+                console.log('尝试失败');
+            });
+        };
+
+        retry(fn, 4);
+    </script>
+</body>
+
+</html>
