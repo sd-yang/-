@@ -1,19 +1,17 @@
 function singlePipe(promiseFunc) {
-    let task = null;
-    let waitLine = [];
-    const func = (value) => {
+    let task;
+    const result = async (value) => {
         if (!task) {
-            task = value;
+            task = promiseFunc(value);
+            return task
         } else {
-            waitLine.push(value);
-        }
-        return promiseFunc(task).then((data) => {
+            await task;
             task = null;
-            if (waitLine.length) return func(waitLine.shift());
-            return data;
-        });
-    }
-    return func;
+            return result(value);
+        }
+    };
+
+    return result;
 }
 
 function promiseFunc(value) {
