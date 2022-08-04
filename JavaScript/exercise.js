@@ -1,17 +1,17 @@
 Function.prototype.bind = function(context) {
     context = context || window;
-    const args = [...arguments].slice(1);
-    const symbolFn = Symbol('key');
+    let args = arguments.slice(1);
+    let symbolFn = Symbol('key');
     context[symbolFn] = this;
-    const _this = this;
-    const result = function (...params) {
+    let _this = this;
+    function results (...params) {
         if (this instanceof _this) {
             this[symbolFn] = _this;
-            this[symbolFn](...[...args,...params]);
-        } else {
-            context[symbolFn](...[...args,...params]);
+            return this[symbolFn](...[...args, ...params]);
         }
+        return context[symbolFn](...[...args, ...params]);
     }
-    result.prototype = Object.create(this.prototype);
-    return result;
+
+    results.prototype = Object.create(this.prototype);
+    return results;
 }
