@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // A 任务
+    setTimeout(() => {
+        console.log(1)
+    }, 20)
+
+    // B 任务
+    setTimeout(() => {
+        console.log(2)
+    }, 0)
+
+    // C 任务
+    setTimeout(() => {
+        console.log(3)
+    }, 10)
+
+    // D
+    setTimeout(() => {
+        console.log(5)
+    }, 10)
+
+    console.log(4)
+
+    // 输出
+
+    // Tips 时间相同的情况下，先入进行任务队列的先执行
+</script>
+</body>
+</html>
