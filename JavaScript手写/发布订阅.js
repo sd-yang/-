@@ -1,34 +1,44 @@
 // https://juejin.cn/post/7055441354054172709#heading-0
 
 class PubSub {
-    constructor() {
-        this.events = {};
-    }
+  constructor() {
+    this.events = {};
+  }
 
-    on = (type, handle) => {
-        if (typeof handle !== 'function') {
-            throw new Error('handle必须是函数');
-        }
-        this.events[type] ? this.events[type].push(handle) : this.events[type] = [handle];
+  on = (type, handle) => {
+    if (typeof handle !== 'function') {
+      throw new Error('handle必须是函数');
     }
+    this.events[type]
+      ? this.events[type].push(handle)
+      : (this.events[type] = [handle]);
+  };
 
-    emit = (type, ...args) => {
-        if (!this.events[type]) return;
-        for (const i of this.events[type]) {
-            i(args)
-        }
+  emit = (type, ...args) => {
+    if (!this.events[type]) return;
+    for (const i of this.events[type]) {
+      i(...args);
     }
+  };
 
-    off = (type, handle) => {
-        if (this.events[type]) {
-            this.events[type] = this.events.filter(k => k.handle !== handle);
-        }
+  off = (type, handle) => {
+    if (this.events[type]) {
+      this.events[type] = this.events.filter((k) => k.handle !== handle);
     }
+  };
+
+  once = (type, handle) => {
+    function onceFn(...args) {
+      handle(args);
+      this.off(type, onceFn);
+    }
+    this.on(type, onceFn);
+  };
 }
 
-const Restaurant = new PubSub()
+const Restaurant = new PubSub();
 const handler = function () {
-  console.log('chips handler called')
-}
-Restaurant.on('chips', handler)
-Restaurant.emit('chips', handler)
+  console.log('chips handler called');
+};
+Restaurant.on('chips', handler);
+Restaurant.emit('chips', handler);
