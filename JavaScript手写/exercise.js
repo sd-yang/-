@@ -1,31 +1,12 @@
-// 防抖
-const debounceFn = (fn, wait, immediate) => {
-  let timeout;
-  return function() {
-    let args = [...arguments];
-    let self = this;
-    if (immediate && !timeout) {
-      fn.apply(self, args);
-    }
-
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      fn.apply(self, args);
-    }, wait)
-  }
+const myNew = (fn, ...args) => {
+  let obj = {};
+  obj.__proto__ = fn.prototype;
+  let res = fn.apply(obj, args);
+  return res instanceof Object ? res : obj;
 }
 
-// 节流
-const throttle = (fn, wait) => {
-  let timer;
-  return function() {
-    let args = [...arguments];
-    let context = this;
-    if (timer) return;
-    timer = setTimeout(() => {
-      clearTimeout(timer);
-      timer = null;
-      fn.apply(context, args);
-    }, wait);
-  }
+const create = (o) => {
+  let Fn = function() {};
+  Fn.prototype = o;
+  return new Fn();
 }
