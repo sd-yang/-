@@ -7,17 +7,23 @@ let arr = [0, 1, 2, [3, 4], [5, [6, 7]]];
  */
 
 const reduceFlat = (arr, depth = 1) => {
-    if (depth === -1) {
-        return arr.reduce((prev, item) => {
-            return [...prev, ...Array.isArray(item) ? reduceFlat(item, -1) : [item]]
-        }, []);
-    } else {
-        return depth > 0 ?
-            arr.reduce((prev, item) => {
-                return [...prev, ...Array.isArray(item) ? reduceFlat(item, depth - 1) : [item]]
-            }, []) :
-            arr;
-    }
+  if (depth === -1) {
+    return arr.reduce((prev, item) => {
+      return [
+        ...prev,
+        ...(Array.isArray(item) ? reduceFlat(item, -1) : [item]),
+      ];
+    }, []);
+  } else {
+    return depth > 0
+      ? arr.reduce((prev, item) => {
+          return [
+            ...prev,
+            ...(Array.isArray(item) ? reduceFlat(item, depth - 1) : [item]),
+          ];
+        }, [])
+      : arr;
+  }
 };
 
 /**
@@ -25,18 +31,18 @@ const reduceFlat = (arr, depth = 1) => {
  */
 
 const stackFlat = (arr) => {
-    let stack = [...arr], result = [];
-    while(stack.length) {
-        let data = stack.pop();
-        if(Array.isArray(data)) {
-            stack.push(...data);
-        } else {
-            result.unshift(data);
-        }
+  let stack = [...arr],
+    result = [];
+  while (stack.length) {
+    let data = stack.pop();
+    if (Array.isArray(data)) {
+      stack.push(...data);
+    } else {
+      result.unshift(data);
     }
+  }
 
-    return result;
+  return result;
 };
-
 
 console.log(stackFlat(arr));

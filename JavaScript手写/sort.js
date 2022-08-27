@@ -14,19 +14,19 @@ const newArr = arr.sort((a, b) => a - b);
  * 冒泡排序
  * 外层控制循环，内容控制比较
  * -1 是因为每次循环查到一个最大的数，就不用再比较了
- * @param {} arr 
+ * @param {} arr
  */
 const sortFunction = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr.length - i; j++) {
-            if (arr[j] > arr[j + 1]) {
-                let data = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = data;
-            }
-        }
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        let data = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = data;
+      }
     }
-    return arr;
+  }
+  return arr;
 };
 
 /**
@@ -41,35 +41,35 @@ const sortFunction = (arr) => {
  */
 
 const sort = (start, end, arr) => {
-    let base = arr[start];
-    let left = start;
-    let right = end;
-    while (left !== right) {
-        while (right > left && arr[right] >= base) {
-            right--;
-        }
-        arr[left] = arr[right];
-        while (right > left && arr[left] <= base) {
-            left++
-        }
-        arr[right] = arr[left];
+  let base = arr[start];
+  let left = start;
+  let right = end;
+  while (left !== right) {
+    while (right > left && arr[right] >= base) {
+      right--;
     }
-    arr[left] = base;
-    return left;
-}
+    arr[left] = arr[right];
+    while (right > left && arr[left] <= base) {
+      left++;
+    }
+    arr[right] = arr[left];
+  }
+  arr[left] = base;
+  return left;
+};
 
 const sortArray = (start, end, arr) => {
-    if (start < end) {
-        let mid = sort(start, end, arr);
-        sortArray(start, mid - 1, arr);
-        sortArray(mid + 1, end, arr);
-    }
-}
+  if (start < end) {
+    let mid = sort(start, end, arr);
+    sortArray(start, mid - 1, arr);
+    sortArray(mid + 1, end, arr);
+  }
+};
 
 const quickSort = (arr) => {
-    sortArray(0, arr.length - 1, arr);
-    return arr;
-}
+  sortArray(0, arr.length - 1, arr);
+  return arr;
+};
 
 /**
  * 方法4: 快速排序简化版 会返回一个新的数组，更消耗性能
@@ -78,21 +78,22 @@ const quickSort = (arr) => {
  */
 
 let quickSort2 = (arr) => {
-    if (arr.length <= 1) return arr;
-    let midIndex = Math.floor(arr.length / 2);
-    let mid = arr.splice(midIndex, 1)[0];
-    let left = [], right = [];
-    for (let i = 0; i < arr.length; i++) {
-        const item = arr[i];
-        if (item < mid) {
-            left.push(item);
-        } else {
-            right.push(item);
-        }
+  if (arr.length <= 1) return arr;
+  let midIndex = Math.floor(arr.length / 2);
+  let mid = arr.splice(midIndex, 1)[0];
+  let left = [],
+    right = [];
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    if (item < mid) {
+      left.push(item);
+    } else {
+      right.push(item);
     }
+  }
 
-    return quickSort2(left).concat([mid], quickSort2(right));
-}
+  return quickSort2(left).concat([mid], quickSort2(right));
+};
 
 /**
  * 方法5: 选择排序
@@ -100,22 +101,21 @@ let quickSort2 = (arr) => {
  * 使用一个值来记录最小值的下标
  */
 const selectSort = (arr) => {
-    let minIndex;
-    for (let i = 0; i < arr.length; i++) {
-        minIndex = i;
-        for (let j = i; j < arr.length; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
-            }
-        }
-        let base = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = base;
+  let minIndex;
+  for (let i = 0; i < arr.length; i++) {
+    minIndex = i;
+    for (let j = i; j < arr.length; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
     }
+    let base = arr[i];
+    arr[i] = arr[minIndex];
+    arr[minIndex] = base;
+  }
 
-    return arr;
+  return arr;
 };
-
 
 /**
  * 插入排序
@@ -123,45 +123,45 @@ const selectSort = (arr) => {
  */
 
 const insetSort = (arr) => {
-    for (let i = 1; i < arr.length; i++) {
-        let current = arr[i];
-        let j = i - 1;
-        while(arr[j] > current && j >= 0) {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = current;
+  for (let i = 1; i < arr.length; i++) {
+    let current = arr[i];
+    let j = i - 1;
+    while (arr[j] > current && j >= 0) {
+      arr[j + 1] = arr[j];
+      j--;
     }
-    return arr;
+    arr[j + 1] = current;
+  }
+  return arr;
 };
 
 /**
  * 归并排序
- * @param arr 
+ * @param arr
  * @returns arr
  * 先使每个子序有序，然后每个序列段有序，然后进行合并
  */
 const mergeSort = (arr) => {
-    if (arr.length <= 1) return arr;
-    const sort = (left, right) => {
-        let result = [];
-        while(left.length > 0 && right.length > 0) {
-            if (left[0] < right[0]) {
-                result.push(left.shift());
-            } else {
-                result.push(right.shift());
-            }
-        }
-        return result.concat(left, right);
+  if (arr.length <= 1) return arr;
+  const sort = (left, right) => {
+    let result = [];
+    while (left.length > 0 && right.length > 0) {
+      if (left[0] < right[0]) {
+        result.push(left.shift());
+      } else {
+        result.push(right.shift());
+      }
     }
-    
-    let mid = Math.floor(arr.length / 2);
-    let left = mergeSort(arr.slice(0, mid));
-    let right = mergeSort(arr.slice(mid));
+    return result.concat(left, right);
+  };
 
-    return sort(left, right);
-}
+  let mid = Math.floor(arr.length / 2);
+  let left = mergeSort(arr.slice(0, mid));
+  let right = mergeSort(arr.slice(mid));
 
-console.log(mergeSort(arr));
+  return sort(left, right);
+};
+
+console.log(quickSort(arr));
 
 // https://blog.csdn.net/SmileDongFF/article/details/123904055
