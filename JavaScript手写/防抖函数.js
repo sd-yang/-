@@ -7,7 +7,7 @@
  */
 const debounce = (fn, wait, immediate) => {
   let timer = null;
-  return function () {
+  const debounced = function () {
     let context = this;
     let args = arguments;
     if (immediate && !time) {
@@ -18,4 +18,12 @@ const debounce = (fn, wait, immediate) => {
       fn.apply(context, [...args]);
     }, wait);
   };
+  debounced.cancel = function () {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  };
+
+  return debounced;
 };
